@@ -1,0 +1,17 @@
+<div class="header">
+  <h1>About Our URL Shortener</h1>
+</div>
+
+@if (isAdmin) {
+  <div class="about-edit">
+    <form (ngSubmit)="changeAboutText(AboutText)">
+      <label for="aboutText">Description:</label>
+      <textarea id="aboutText" [(ngModel)]="AboutText" name="AboutText" rows="6" class="about-textarea"></textarea>
+      <button type="submit" class="btn-save">Save</button>
+    </form>
+  </div>
+} @else {
+  <div class="about-display">
+    {{ AboutText }}
+  </div>
+}

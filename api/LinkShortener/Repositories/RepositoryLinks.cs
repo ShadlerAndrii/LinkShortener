@@ -18,7 +18,7 @@ namespace LinkShortener.Repositories
         public async Task<List<UnAuthorizedLinkDTO>> GetLinkData()
         {
             var list = await _dbContext.Links
-                .Select(l => new UnAuthorizedLinkDTO
+                .Select (l => new UnAuthorizedLinkDTO
                 {
                     ShortLink = l.ShortLink,
                     LongLink = l.LongLink
@@ -28,16 +28,37 @@ namespace LinkShortener.Repositories
             return list;
         }
 
-        public async Task<List<Link>> GetLinkData(int userId, string role)
+        public async Task<List<LinkUserDTO>> GetLinkData(int userId, string role)
         {
             if (role == UserRole.Admin.ToString())
             {
-                return await _dbContext.Links.ToListAsync();
+                return await _dbContext.Links.Include(u => u.User)
+                    .Select (u => new LinkUserDTO
+                    {
+                        LinkId = u.LinkId,
+                        LongLink = u.LongLink,
+                        ShortLink = u.ShortLink,
+                        CreationDate = u.CreationDate,
+                        UserId = u.UserId,
+                        UserLogin = u.User.Login,
+                    })
+                    .ToListAsync();
             }
             else
             {
-                return await _dbContext.Links.Where(u => u.UserId == userId).ToListAsync();
-            }          
+                return await _dbContext.Links.Include(u => u.User)
+                    .Select (u => new LinkUserDTO
+                    {
+                        LinkId = u.LinkId,
+                        LongLink = u.LongLink,
+                        ShortLink = u.ShortLink,
+                        CreationDate = u.CreationDate,
+                        UserId = u.UserId,
+                        UserLogin = u.User.Login,
+                    })
+                    .Where(u => u.UserId == userId)
+                    .ToListAsync();
+            }
         }
 
         public async Task<bool> TryAddLinkData( int userId,
@@ -65,15 +86,15 @@ namespace LinkShortener.Repositories
                                             int userId,
                                             string role)
         {
-            var linkUserId = await _dbContext.Links.SingleOrDefaultAsync(l => l.UserId == userId);
+            var linkUserId = await _dbContext.Links.SingleOrDefaultAsync(l => l.LinkId == linkId);
 
             if (linkUserId == null)
                 throw new InvalidOperationException();
 
-            if (linkUserId?.UserId == userId || role == UserRole.Admin.ToString())
+            if (linkUserId.UserId == userId || role == UserRole.Admin.ToString())
             {
-                var linkToRemove = _dbContext.Links.Single(l => l.LinkId == linkId);
-                _dbContext.Remove(linkToRemove);
+                _dbContext.Remove(linkUserId);
+                await _dbContext.SaveChangesAsync();
             }
         }
 

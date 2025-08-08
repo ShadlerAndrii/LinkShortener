@@ -17,5 +17,6 @@ namespace LinkShortener.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Link> Links { get; set; }
+        public DbSet<About> Abouts { get; set; }
     }
 }

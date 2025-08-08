@@ -1,0 +1,240 @@
+/* Загальні стилі */
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #f9f9f9;
+  color: #333;
+}
+
+/* Хедер */
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  margin-bottom: 10px;
+  font-size: 32px;
+  color: #007BFF;
+}
+
+.header p {
+  margin: 5px 0 15px;
+  font-size: 16px;
+}
+
+.header button {
+  padding: 10px 25px;
+  font-size: 16px;
+  background-color: #007BFF;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.header button:hover {
+  background-color: #0056b3;
+}
+
+/* Popup backdrop */
+.popup-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup вікно */
+.popup {
+  background: white;
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  width: 360px;
+  max-width: 90%;
+  text-align: center;
+}
+
+.popup h2 {
+  margin-bottom: 20px;
+  color: #007BFF;
+}
+
+.popup form label {
+  display: block;
+  text-align: left;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.popup form input {
+  width: 100%;
+  padding: 7px 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+.popup form button {
+  width: 100%;
+  padding: 10px 0;
+  background-color: #007BFF;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.popup form button:hover {
+  background-color: #0056b3;
+}
+
+.popup > button {
+  margin-top: 10px;
+  background: transparent;
+  border: none;
+  color: #007BFF;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+/* Таблиця */
+.body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+.body th, .body td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.body th {
+  background-color: #007BFF;
+  color: white;
+  font-weight: 600;
+}
+
+.body tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Посилання */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+a:hover {
+  color: #007BFF;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Кнопки в таблиці */
+.body button {
+  padding: 5px 12px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.body button:hover {
+  background-color: #c82333;
+}
+
+/* Tooltip */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  font-weight: bold;
+  color: #007BFF;
+  cursor: help;
+}
+
+.tooltip button {
+  all: unset;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+  line-height: 24px;
+  font-size: 14px;
+  cursor: default;
+  transition: background-color 0.2s ease;
+}
+
+.tooltip button:hover {
+  background-color: #d0d0d0;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 220px;
+  background-color: white;
+  color: #333;
+  text-align: left;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  position: absolute;
+  z-index: 1001;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Спеціально для копійованого input */
+input.copyable-link {
+  background-color: #f0f8ff; /* світлий фон, щоб виділити */
+  border: 1px solid #007BFF;
+  color: #007BFF;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input.copyable-link:hover {
+  background-color: #e0f0ff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+}
+
+input.copyable-link:focus {
+  outline: none;
+  background-color: #d6ecff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.6);
+}
+
+input.copyable-link {
+  cursor: copy;
+}

@@ -5,6 +5,7 @@ using LinkShortener.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -49,10 +50,10 @@ namespace LinkShortener.Controllers
         [Authorize]
         [Route("[controller]")]
         [HttpGet]
-        public async Task<List<Link>> GetAuthorizedData()
+        public async Task<List<LinkUserDTO>> GetAuthorizedData()
         {
-            int userId = int.Parse(User.FindFirst("id")!.Value);
-            string role = User.FindFirst("role")!.Value;
+            int userId = int.Parse(User.FindFirst("id")?.Value);
+            string role = User.FindFirst(ClaimTypes.Role)?.Value;
 
             return await _repository.GetLinkData(userId, role);
         }
@@ -85,7 +86,7 @@ namespace LinkShortener.Controllers
         public async Task<OkResult> DeleteData(int linkId)
         {
             var userId = int.Parse(User.FindFirst("id")?.Value);
-            var role = User.FindFirst("role")?.Value;
+            string role = User.FindFirst(ClaimTypes.Role)?.Value;
 
             await _repository.DeleteLinkData(linkId, userId, role);
 

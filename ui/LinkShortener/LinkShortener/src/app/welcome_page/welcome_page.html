@@ -1,0 +1,62 @@
+<div class="header">
+    <h1>Welcome to the Link Shortener App</h1>
+    <p>This app allows you to shorten long URLs easily.</p>
+    <p>To get started, please log in or register.</p>
+    <button (click)="loginState = true">Log In</button>
+    <button (click)="registerState = true">Register</button>
+</div>
+
+@if (loginState) {
+    <div class="popup-backdrop">
+        <div class="popup">
+            <h2>Login</h2>
+            <form (submit)="Login()">
+                <label for="username">Username:</label>
+                <input type="text" id="username" [(ngModel)]="login" name="username" required>
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" [(ngModel)]="password" name="password" required>
+                <br>
+                <button type="submit">Login</button>
+            </form>
+            <button (click)="loginState = false">Close</button>
+        </div>
+    </div>
+}
+
+@if (registerState) {
+    <div class="popup-backdrop">
+        <div class="popup">
+            <h2>Register</h2>
+            <form (submit)="Register()">
+                <label for="newUsername">Username:</label>
+                <input type="text" id="newUsername" [(ngModel)]="login" name="newUsername" required>
+                <br>
+                <label for="newPassword">Password:</label>
+                <input type="password" id="newPassword" [(ngModel)]="password" name="newPassword" required>
+                <br>
+                <button type="submit">Register</button>
+            </form>
+            <button (click)="registerState = false">Close</button>
+        </div>
+    </div>
+}
+
+<div class="body">
+    <table>
+        <tr>
+            <th>Short Links</th>
+            <th>Long Links</th>
+        </tr>
+        @for (link of links; track link) {            
+            <tr>
+                <td>
+                    <a [href]="link.ShortLink" target="_blank" rel="noopener">{{ link.ShortLink }}</a>
+                </td>
+                <td>
+                    <a [href]="link.LongLink" target="_blank" rel="noopener">{{ link.LongLink }}</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

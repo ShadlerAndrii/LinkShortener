@@ -21,7 +21,8 @@ namespace LinkShortener.Repositories
                                         string newPassword,
                                         UserRole newRole)
         {
-            if(_dbContext.Users.FirstOrDefaultAsync(u => u.Login == newLogin) == null)
+            var existingUser = await _dbContext.Users.FirstOrDefaultAsync(u => u.Login == newLogin);
+            if (existingUser != null)
             {
                 return false;
             }

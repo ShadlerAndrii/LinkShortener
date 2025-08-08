@@ -1,0 +1,57 @@
+<div class="header">
+    <h1>User Page</h1>
+    <p>Welcome back! Here you can manage your shortened links.</p>
+    <button (click)="isCreateLinkState = true">Create new shortened link</button>
+</div>
+
+@if (isCreateLinkState) {
+    <div class="popup-backdrop">
+        <div class="popup">
+            <h2>Create Shortened Link</h2>
+            <form (submit)="CreateNewLink(newLongLink)">
+                <label for="longLink">Long Link:</label>
+                <input type="text" id="longLink" [(ngModel)]="newLongLink" name="longLink" required>
+                <br>
+                <label for="shortLink">Short Link:</label>
+                <input type="text" id="shortLink" class="copyable-link" [(ngModel)]="newShortLink" name="shortLink" readonly (click)="onShortLinkCreatedClick()">
+                <br>
+                <button type="submit">Create</button>
+            </form>
+            <button (click)="isCreateLinkState = false">Close</button>
+        </div>
+    </div>
+}
+
+<div class="body">
+    <table>
+        <tr>
+            <th>Short Links</th>
+            <th>Long Links</th>
+            <th>Delete</th>
+            <th>Info</th>
+        </tr>
+        @for (link of links; track link.LinkId) {
+            <tr>
+                <td>
+                    <a [href]="link.ShortLink" target="_blank" rel="noopener">{{ link.ShortLink }}</a>
+                </td>
+                <td>
+                    <a [href]="link.LongLink" target="_blank" rel="noopener">{{ link.LongLink }}</a>
+                </td>
+                <td>
+                    <button (click)="DeleteLink(link.LinkId)">X</button>
+                </td>
+                <td>
+                    <div class="tooltip">
+                        <button disabled>?</button>
+                        <span class="tooltip-text">
+                            <p>Id: {{ link.LinkId }}</p>
+                            <p>Author: {{ link.UserLogin }}</p>
+                            <p>CreateonDate: {{ link.CreationDate }}</p>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

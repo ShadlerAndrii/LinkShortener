@@ -29,7 +29,7 @@ namespace LinkShortener.Controllers
             var claims = new[]
             {
                 new Claim("id", $"{id}"),
-                new Claim("role", $"{role}"),
+                new Claim(ClaimTypes.Role, $"{role}"),
                 new Claim("login", $"{login}")
             };
 
@@ -57,9 +57,9 @@ namespace LinkShortener.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> AddData([FromForm] string login,
-                                            [FromForm] string password,
-                                            [FromForm] UserRole role)
+        public async Task<IActionResult> AddData(   [FromForm] string login,
+                                                    [FromForm] string password,
+                                                    [FromForm] UserRole role)
         {
             if (!await _repository.TryAddUserData(login, password, role))
             {
@@ -69,10 +69,10 @@ namespace LinkShortener.Controllers
             return Ok();
         }
 
-        [HttpGet("authenticate")]
+        [HttpPost("authenticate")]
         [AllowAnonymous]
-        public async Task<object> LoginUser([FromQuery] string login,
-                                            [FromQuery] string password)
+        public async Task<IActionResult> LoginUser( [FromForm] string login,
+                                                    [FromForm] string password)
         {
             var user = await _repository.LoginUser(login, password);
 
@@ -86,7 +86,7 @@ namespace LinkShortener.Controllers
 
             var token = Generate(id, role, login);
 
-            return token;
+            return Ok(new { token });
         }
     }
 }

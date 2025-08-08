@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<AppDbContext>();
 builder.Services.AddScoped<RepositoryUsers>();
 builder.Services.AddScoped<RepositoryLinks>();
+builder.Services.AddScoped<RepositoryAbouts>();
 
 builder.Services.AddControllers();
 builder.Services.AddAuthentication(opt =>
